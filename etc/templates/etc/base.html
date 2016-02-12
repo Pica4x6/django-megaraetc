@@ -1,0 +1,30 @@
+
+{% load staticfiles %}
+
+{% load material_form %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        {% include 'material/includes/material_css.html' %}
+        {% include 'material/includes/material_js.html' %}
+        <link rel="stylesheet" type="text/css" href="{% static 'etc/style.css' %}" />
+        {% block head %}
+            <title>MEGARA Online Exposure Time Calculator </title>
+        {% endblock head %}
+    </head>
+<body>
+    {% block header %}
+    {% endblock header %}
+
+
+    {% block content %}
+    {% endblock content %}
+
+
+    {% block footer %}
+    {% endblock footer %}
+
+</body>
+</html>

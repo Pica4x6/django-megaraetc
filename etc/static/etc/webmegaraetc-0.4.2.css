@@ -1,65 +1,52 @@
 /*CSS*/
 /* this is a comment */
 
-#wrapper {
-    width:1000px;
-    margin: 0 auto;
-}
+/*#wrapper {*/
+    /*width:1000px;*/
+    /*margin: 0 auto;*/
+/*}*/
 
-#body {
-    font-family: sans-serif;
-    background-color: #FFFFFF;
-}
+/*#body {*/
+    /*font-family: sans-serif;*/
+    /*background-color: #FFFFFF;*/
+/*}*/
 
-#header {
-    width: 100%;
-    height: 100px;
-    align: center;
-}
+/*#header {*/
+    /*width: 100%;*/
+    /*height: 100px;*/
+    /*align: center;*/
+/*}*/
 
-#headertable {
-    width: 100%;
-    border: 0;
- }
+/*#headertable {*/
+    /*width: 100%;*/
+    /*border: 0;*/
+ /*}*/
 
-#headertabletr {
-    }
+/*#headertabletr {*/
+    /*}*/
 
-TD.maintitletd {
-    width: 40%;
-    text-align: center;
-    font-size: 18pt;
-    font-color: #000000;
-    vertical-align: middle;
-}
+/*TD.maintitletd {*/
+    /*width: 40%;*/
+    /*text-align: center;*/
+    /*font-size: 18pt;*/
+    /*font-color: #000000;*/
+    /*vertical-align: middle;*/
+/*}*/
 
-TD.ucmlogotd {
-    width: 30%;
-    text-align: left;
-}
+/*TD.ucmlogotd {*/
+    /*width: 30%;*/
+    /*text-align: left;*/
+/*}*/
 
 #ucmlogoimg {
     width: 90px;
 }
 
-TD.megaralogotd {
-    width: 30%;
-    text-align: right;
-}
+/*TD.megaralogotd {*/
+    /*width: 30%;*/
+    /*text-align: right;*/
+/*}*/
 
-#theformcontainer {
-    background-color: #FFFFFF;
-    height:500px;
-    width:100%;
-    /* float:left; */
-    padding:0px;
-}
-
-#leftdiv{
-    width:55%;
-    float:left;
-    height: 300px;
-}
 
 #rightdiv{
     width:45%;
@@ -92,7 +79,7 @@ TD.megaralogotd {
 //#input {overflow:hidden; overflow-y:scroll;} */
 
 #results{
-    line-height: 100%; 
+    line-height: 100%;
     /*height:850px;*/
     width:100%;
     text-align: left;
@@ -111,36 +98,36 @@ TD.megaralogotd {
 
 /*body{line-height: 100%;}*/
 p {line-height: 100%;
-    text-align: center; 
+    text-align: center;
     background-color: #AAAAAA;}
 
 ul {list-style:none;
     padding: 0px 0px 5px;
 }
 
-table {
-    border: 0;
-    width: 100%;
-}
+/*table {*/
+    /*border: 0;*/
+    /*width: 100%;*/
+/*}*/
 
-#tabletarget {
-    width: 100%
-}
+/*#tabletarget {*/
+    /*width: 100%*/
+/*}*/
 
-#tablebuttons {
-    text-align: center;
-    width: 100%;
-}
+/*#tablebuttons {*/
+    /*text-align: center;*/
+    /*width: 100%;*/
+/*}*/
 
-#TRtarget {
-    height: 32px;
-}
+/*#TRtarget {*/
+    /*height: 32px;*/
+/*}*/
 
-TD {font-size: 12px;
-    /* line-height: 100%; */
-    font-weight: bold;
-    /* vertical-align: top; */
-}
+/*TD {font-size: 12px;*/
+    /*/!* line-height: 100%; *!/*/
+    /*font-weight: bold;*/
+    /*/!* vertical-align: top; *!/*/
+/*}*/
 
 a:link {
     color: #000000;
@@ -171,16 +158,16 @@ a:visited {
     color: red;
 }
 
-/* Special TD */
-TD.tdstype {
-    width: 20%;
-    text-align: right;
-    padding: 0px 0 0 0;
-    line-height: 80%;
-}
-TD.inputfluxtd {
-    text-align: right;
-    /* padding: 0px 0 0 0; */
+/*/!* Special TD *!/*/
+/*TD.tdstype {*/
+    /*width: 20%;*/
+    /*text-align: right;*/
+    /*padding: 0px 0 0 0;*/
+    /*line-height: 80%;*/
+/*}*/
+/*TD.inputfluxtd {*/
+    /*text-align: right;*/
+    /*/!* padding: 0px 0 0 0; *!/*/
 
-}
+/*}*/
 
