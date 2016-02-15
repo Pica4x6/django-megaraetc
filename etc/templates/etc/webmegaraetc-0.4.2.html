@@ -1,14 +1,13 @@
 {% extends "etc/base.html" %}
 {% load staticfiles %}
+{# Load the tag library #}
+{% load bootstrap3 %}
 
     {% block head %}
             <title>MEGARA Online Exposure Time Calculator</title>
             <link href="{% static 'etc/webmegaraetc-0.4.2.css' %}" rel="stylesheet" type="text/css" />
             <script src="{% static 'etc/webmegaraetc-0.4.2.js' %}"></script>
 
-        <!--ADD this chunk for doing onload submit-->
-            <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>-->
-            <script type="text/javascript" src="{% static 'etc/jquery.min.js' %}"></script>
             <script type="text/javascript">
                 $(document).ready(function() {
                 window.document.forms[0].submit();
@@ -27,339 +26,121 @@
 
     <div id="wrapper">
         <div id="theformcontainer">
-            <div id="leftdiv">
-                <P>Target Input Flux Distribution</P>
-                <form id="myform" action="{% url 'etc:results' %}" method="get" target="my_iframe">
-                <table id="tabletarget">
-                    <tr id="trtarget">
-                        <td class="tdstype" valign="center">Source type:<br /><br /><FONT id="sizet">Size:</FONT></td>
-                        <td width=30% align="left" valign="top">
-                            {{ form1.stype }}
+            <form id="myform" action="{% url 'etc:results' %}" method="get" target="my_iframe"> {% csrf_token %}
+                <div id="leftdiv">
+                    <p>Target Input Flux Distribution</p>
+                    {% bootstrap_form form1 %}
+                </div>
 
-                            {{ form1.size }}
+                <div id="rightdiv">
+                    <p>Instrument Setup</p>
+                    {% bootstrap_form form2 %}
+                </div>
+                <div id="rightdiv">
+                    <p>Atmospheric Conditions</p>
+                    {% bootstrap_form form3 %}
+                </div>
+                <div id="rightdiv">
+                    <p>Observational Setup</p>
+                    {% bootstrap_form form4 %}
+                </div>
 
-                            <a href="Javascript:newPopup(' {% static 'etc/help/size.txt' %} ');">
-                                <input type="BUTTON" value="?">
-                            </a>
+                <div id="submitbuttonsdiv">
+                {% buttons class="aux"%}
+                    {% bootstrap_button "Submit" button_type="submit" button_class="btn-primary" icon="star" %}
+                    {% bootstrap_button "Reset" button_type="reset" button_class="btn-primary" icon="remove" %}
+                {% endbuttons %}
+                </div>
 
-                        </td>
-
-                        <td width=2% align="center">
-                            <!--- This is a buffer --->
-                        </td>
-
-                        <td width=25% align="right" valign="top">
-                            Continuum band:
-                        </td>
-                        <td width=30% valign="top">
-                            {{ form1.pfilter }}
-                        </td>
-                        <td width=20% align="center">
-
-                        </td>
-                    </tr>
-                    <tr id="trtarget">
-                        <td class="inputfluxtd" valign="top">
-                            Input flux:
-                        </td>
-                        <td valign="top">
-                            {{ form1.iflux }}
-                        </td>
-                        <td>
-                        </td>
-                        <td align="left" valign="center" >
-                            {{ form1.contmagflux }}
-                        </td>
-                        <td valign="top" style="padding:3px 0 0 0">
-                            {{ form1.contmagval }}
-                            <a href="Javascript:newPopup(' {% static 'etc/help/continuummagnitude.txt' %} ');">
-                                <input type="BUTTON" value="?">
-                            </a>
-                            {{ form1.contfluxval }}
-                            <a href="Javascript:newPopup(' {% static 'etc/help/continuumflux.txt' %} ');">
-                                <input type="BUTTON" value="?">
-                            </a>
-                        </td>
-                        <td align="center">
-                        </td>
-                    </tr>
-                    <tr id="trtarget">
-                        <td align="right">Resolved line?:
-                        </td>
-                        <td>
-                            {{ form1.rline }}
-                        </td>
-                        <td>
-                        </td>
-                        <td align="right">
-                            <FONT id="greylineflux">Line flux (cgs units):</FONT>
-                        </td>
-                        <td>
-                            {{ form1.lineflux }}
-                            <a href="Javascript:newPopup(' {% static 'etc/help/lineflux.txt' %} ');">
-                                <input type="BUTTON" value="?">
-                            </a>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr id="trtarget">
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td align="right">
-                            <FONT id="greylinewave">Line wavelength (Angstroms):</FONT>
-                        </td>
-                        <td>
-                            {{ form1.linewave }}
-                            <a href="Javascript:newPopup(' {% static 'etc/help/linewavelength.txt' %} ');">
-                                <input type="BUTTON" value="?">
-                            </a>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr id="trtarget">
-                        <td align="right">
-                            Input spectrum:
-                        </td>
-                        <td>
-                            {{ form1.spectype }}
-                        </td>
-                        <td>
-                        </td>
-                        <td align="right">
-                            <FONT id="greylinefwhm">Line FWHM (Angstroms):</FONT>
-                        </td>
-                        <td>
-                            {{ form1.linefwhm }}
-                            <a href="Javascript:newPopup(' {% static 'etc/help/linefwhm.txt' %} ');">
-                                <input type="BUTTON" value="?">
-                            </a>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div id="rightdiv">
-                <center><P>Instrument Setup</P></center>
-                <table width=100%>
-                    <tr>
-                        <td align=center>
-                            Observing Mode: {{ form2.om_val }}
-                            <a href="Javascript:newPopup(' {% static 'etc/help/observingmodes.txt' %} ');">
-                                <input type="BUTTON" value="?">
-                            </a>
-                        </td>
-                        <td align=left>VPH setup: {{ form2.vph }}
-                            <a href="Javascript:newPopupBig(' {% static 'etc/help/vphsetup.html' %} ');">
-                                <input type="BUTTON" value="?" />
-                            </a>
-                        </td>
-                    </tr>
-                </table>
-                <center><P>Atmospheric Conditions</P></center>
-                <table border="0">
-                    <tr>
-                        <td align="right">
-                            Moon Phase:
-                            {{ form3.moonph }}
-                        </td>
-                        <td width="6.5%">
-                        </td>
-                        <td width=55%>
-                            <table border="0" width=100%>
-                                <tr>
-                                    <td width=30% align="right">
-                                        Airmass:
-                                    </td>
-                                    <td width=20% align="left">
-                                        {{ form3.airmass }}
-                                        <a href="Javascript:newPopup(' {% static 'etc/help/airmass.txt' %} ');">
-                                            <input type="BUTTON" value="?" />
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width=20% align="right">
-                                        Seeing (arcsecs):
-                                    </td>
-                                    <td width=25% align="left">
-                                        {{ form3.seeing }}
-                                        <a href="Javascript:newPopup(' {% static 'etc/help/seeing.txt' %} ');">
-                                            <input type="BUTTON" value="?" />
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-                <center><P>Observational Setup</P></center>
-                <table width=100% border=0>
-                    <tr>
-                        <td width="20%" align="right">
-                            Num. frames:
-                        </td>
-                        <td width="2%" align="left">
-                            {{ form4.numframes }}
-                        </td>
-                        <td width="1%" >
-                            <!--- This is a buffer --->
-                        </td>
-                        <td width="15%" >
-                            <!--- This is a buffer --->
-                        </td>
-                        <td width="1%" >
-                            <!--- This is a buffer --->
-                        </td>
-                        <td width="1%" >
-                            <!--- This is a buffer --->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            Exptime per frame (sec):
-                        </td>
-                        <td align="left">
-                            {{ form4.exptimepframe }}
-                        </td>
-                        <td>
-
-                        </td>
-                        <td align="right">
-                            <FONT id="greylineap">Line aperture: </FONT>
-                        </td>
-                        <td align="left">
-                            {{ form4.lineap }}
-                        </td>
-                        <td>
-                            <a href="Javascript:newPopup(' {% static 'etc/help/lineaperture.txt' %} ');">
-                                <input type="BUTTON" value="?" />
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right" valign="top" style="padding:7 0 0 0" >
-                            (*)No. of sky fibers:
-                        </td>
-                        <td align="left">
-                            {{ form4.nfibers }}
-                        </td>
-                        <td>
-                            <a href="Javascript:newPopup(' {% static 'etc/help/skyfiber.txt' %} ');">
-                                <input type="BUTTON" value="?" />
-                            </a>
-                        </td>
-                        <td align="right">
-                            <FONT id="greycontap">Continuum aperture: </FONT>
-                        </td>
-                        <td align="left">
-                            {{ form4.contap }}
-                        </td>
-                        <td>
-                            <a href="Javascript:newPopup(' {% static 'etc/help/continuumaperture.txt' %} ');">
-                                <input type="BUTTON" value="?" />
-                            </a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div id="submitbuttonsdiv">
-            <hr>
-            <table id="tablebuttons">
-                <tr>
-                    <td width="30%" align="left">
-                        <input type="submit" value="Submit" id="btn1"/>
-                        <input type="reset" value="Reset" />
-                    </td>
-                    <td width="40% align="center">
-                        <a href=" {% static 'etc/TEC_MEG_057-2D.pdf' %} " TARGET=_blank >
-                            <input type="BUTTON" value="Manual v0.4.2">
-                        </a>
-                        <a href="Javascript:newPopupBig(' {% static 'etc/help/HELP.txt' %} ');">
-                            <input type="BUTTON" value="Help">
-                        </a>
-                        <input type='button' id='btn2' value='New Window'>
-                        <a href="{% static 'etc/outputcalc.txt' %}" download>
-                            <input type="button" value="Print to file">
-                        </a>
-                    </td>
-                    <td align="right">
-                        <p id="smalltext">original ETC (offline) python v0.4.1 (114MB)</p>
-                        <a href="{% static 'etc/megaraetc-0.4.1.tar' %}" download>
-                            <input type="button" value="Download">
-                        </a>
-                    </td>
-                    <!--Required to output the result to different targets-->
-                    <script>
-                        var form = document.getElementById('myform');
-                        form.onsubmit = function() {
-                        form.target = 'my_iframe';
-
-                        };
-
-                        document.getElementById('btn2').onclick = function() {
-                        form.target = '_blank';
-                        form.submit();
-                        }
-                    </script>
-                </tr>
-            </table>
-        </div>
-        <hr />
-        </form>
+{#                <div id="submitbuttonsdiv">#}
+{#                    <hr>#}
+{#                    <table id="tablebuttons">#}
+{#                        <tr>#}
+{#                            <td align="left">#}
+{#                                <input type="submit" value="Submit" id="btn1"/>#}
+{#                                <input type="reset" value="Reset" />#}
+{#                            </td>#}
+{#                            <td align="center">#}
+{#                                <a href=" {% static 'etc/TEC_MEG_057-2D.pdf' %} " TARGET=_blank >#}
+{#                                    <input type="BUTTON" value="Manual v0.4.2">#}
+{#                                </a>#}
+{#                                <a href="Javascript:newPopupBig(' {% static 'etc/help/HELP.txt' %} ');">#}
+{#                                    <input type="BUTTON" value="Help">#}
+{#                                </a>#}
+{#                                <input type='button' id='btn2' value='New Window'>#}
+{#                                <a href="{% static 'etc/outputcalc.txt' %}" download>#}
+{#                                    <input type="button" value="Print to file">#}
+{#                                </a>#}
+{#                            </td>#}
+{#                            <td align="right">#}
+{#                                <p id="smalltext">original ETC (offline) python v0.4.1 (114MB)</p>#}
+{#                                <a href="{% static 'etc/megaraetc-0.4.1.tar' %}" download>#}
+{#                                    <input type="button" value="Download">#}
+{#                                </a>#}
+{#                            </td>#}
+{#                            <!--Required to output the result to different targets-->#}
+{#                            <script>#}
+{#                                var form = document.getElementById('myform');#}
+{#                                form.onsubmit = function() {#}
+{#                                form.target = 'my_iframe';#}
+{#    #}
+{#                                };#}
+{#    #}
+{#                                document.getElementById('btn2').onclick = function() {#}
+{#                                form.target = '_blank';#}
+{#                                form.submit();#}
+{#                                }#}
+{#                            </script>#}
+{#                        </tr>#}
+{#                    </table>#}
+            </form>
 
     <!-- THE OUTPUT form STARTS HERE -->
-        <div id="theoutput">
-            <table>
-                <tr>
-                    <td align="center">
-                        <p>RESULTS</p>
-                        <b>Output Continuum S/N:</b>
-                        <a href="Javascript:newPopup(' {% static 'etc/help/continuumoutput.txt' %} ');">
-                            <input type="BUTTON" value="?">
-                        </a>
-                        <b>Output Line S/N:</b>
-                        <a href="Javascript:newPopup(' {% static 'etc/help/lineoutput.txt' %} ');">
-                            <input type="BUTTON" value="?">
-                        </a>
-                        <b>Input Parameters:</b>
-                        <a href="Javascript:newPopup(' {% static 'etc/help/inputparameters.txt' %} ');">
-                            <input type="BUTTON" value="?">
-                        </a>
-                        <!--<video controls loop autoplay width=70px>-->
-                          <!--<source src="{% static 'etc/movie.mp4' %}" type="video/mp4">-->
-                          <!--<source src="{% static 'etc/movie.ogg' %}" type="video/ogg">-->
-                          <!--Your browser does not support the video tag.-->
-                        <!--</video>-->
-                    </td>
-                </tr>
-            </table>
-
-            <div id="results">
-                <iframe id="my_iframe" name="my_iframe" src="{% url 'etc:results' %}">
-                </iframe>
-            </div>
-
-            <hr>
-            MEGARA Online Exposure Time Calculator version 0.4.2<br />
-            Report problems/bugs/requests to: Alexandre Y. K. BOUQUIN ( abouquin at fis.ucm.es )<br />
-
-            <div style="float:right">
-                Released on: 01/31/2016. Last modified on:
-                <script language="JavaScript">
-                document.write(document.lastModified);
-                </script>
+            <div id="theoutput">
+{#                <table>#}
+{#                    <tr>#}
+{#                        <td align="center">#}
+{#                            <p>RESULTS</p>#}
+{#                            <b>Output Continuum S/N:</b>#}
+{#                            <a href="Javascript:newPopup(' {% static 'etc/help/continuumoutput.txt' %} ');">#}
+{#                                <input type="BUTTON" value="?">#}
+{#                            </a>#}
+{#                            <b>Output Line S/N:</b>#}
+{#                            <a href="Javascript:newPopup(' {% static 'etc/help/lineoutput.txt' %} ');">#}
+{#                                <input type="BUTTON" value="?">#}
+{#                            </a>#}
+{#                            <b>Input Parameters:</b>#}
+{#                            <a href="Javascript:newPopup(' {% static 'etc/help/inputparameters.txt' %} ');">#}
+{#                                <input type="BUTTON" value="?">#}
+{#                            </a>#}
+{#                            <!--<video controls loop autoplay width=70px>-->#}
+{#                              <!--<source src="{% static 'etc/movie.mp4' %}" type="video/mp4">-->#}
+{#                              <!--<source src="{% static 'etc/movie.ogg' %}" type="video/ogg">-->#}
+{#                              <!--Your browser does not support the video tag.-->#}
+{#                            <!--</video>-->#}
+{#                        </td>#}
+{#                    </tr>#}
+{#                </table>#}
+{##}
+                <div id="results">
+                    <iframe id="my_iframe" name="my_iframe" src="{% url 'etc:results' %}">
+                    </iframe>
+                </div>
+{##}
+{#                <hr>#}
+{#                MEGARA Online Exposure Time Calculator version 0.4.2<br />#}
+{#                Report problems/bugs/requests to: Alexandre Y. K. BOUQUIN ( abouquin at fis.ucm.es )<br />#}
+{##}
+{#                <div style="float:right">#}
+{#                    Released on: 01/31/2016. Last modified on:#}
+{#                    <script language="JavaScript">#}
+{#                    document.write(document.lastModified);#}
+{#                    </script>#}
+{#                </div>#}
             </div>
         </div>
 
     <!--CLOSE WRAPPER-->
     </div>
-{% endblock %}
+
+    {% endblock %}

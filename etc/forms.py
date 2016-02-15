@@ -51,7 +51,7 @@ class TargetForm(forms.Form):
     stype = forms.ChoiceField(label="Source type", initial="P", choices=STYPE, widget=forms.RadioSelect(renderer=HorizontalRadioRenderer, attrs={'onclick':'selector()'}))
     size = forms.FloatField(label="Size", initial=1.0, min_value=0.0, max_value=3600, widget=forms.TextInput(attrs={'size':'7','disabled':'true'}))
 
-    iflux = forms.ChoiceField(label="Input flux", initial="C", choices=IFLUX, widget=forms.RadioSelect(attrs={'onclick':'selectInputflux()'}))
+    iflux = forms.ChoiceField(label="Input flux", initial="C", choices=IFLUX, widget=forms.RadioSelect(renderer=HorizontalRadioRenderer, attrs={'onclick':'selectInputflux()'}))
     rline = forms.ChoiceField(label="Resolved line?", initial="N", choices=RLINECHOICES, widget=forms.RadioSelect(renderer=HorizontalRadioRenderer, attrs={'onclick':'selectRline()','disabled':'true'})) #attrs={'disabled':'disabled'}
 
     spectype = forms.ChoiceField(label="Input spectrum", initial=1, choices=template_choice()) #, widget=forms.Select(attrs={'size':'4', 'style':'width:100px' }))
