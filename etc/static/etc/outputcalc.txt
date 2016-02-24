@@ -1,0 +1,39 @@
+
+ INPUT PARAMETERS:
+ * Source type: Point
+  Continuum: V = 20.000 mag
+  Continuum Flux = 3.666e-17 cgs
+* Instrument: 
+  Obs. Mode = LCB
+  VPH =       MR-U
+* Sky: 
+  Moon =   Dark
+  Airmass: X = 1.00
+  Seeing(@X=1) = 0.50
+  Sky-flux(U,@X) = 1.089e-17 cgs
+  Seeing(@X) = 0.50
+* Observation: 
+ Num. of frames =      1
+ Exptime/frame =  3600.0
+ Total Exptime =  3600.0
+ NP_Dark =  65500
+  Sky-bundles = 100
+
+OUTPUT CONTINUUM SNR 
+(at lambda_c = 4104.0 AA)
+(of frame // of total)
+* SNR per fibre:
+7.48 // 7.48 per detector pixel
+14.96 // 14.96 per spectral pixel
+29.92 // 29.92 per spectral FWHM (voxel)
+  49.86 // 49.86 per AA
+
+ * SNR in total source area:
+  (no. of fibres~  1.0)
+14.29 // 14.29 per spectral pixel
+28.57 // 28.57 per spectral FWHM
+47.61 // 47.61 per AA
+
+ OUTPUT LINE SNR: 
+*** None selected ***
+
