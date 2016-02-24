@@ -5,14 +5,9 @@
 
     {% block head %}
             <title>MEGARA Online Exposure Time Calculator</title>
-            <link href="{% static 'etc/webmegaraetc-0.4.2.css' %}" rel="stylesheet" type="text/css" />
-            <script src="{% static 'etc/webmegaraetc-0.4.2.js' %}"></script>
-
-            <script type="text/javascript">
-                $(document).ready(function() {
-                window.document.forms[0].submit();
-                });
-            </script>
+            <link href="{% static 'etc/css/webmegaraetc-0.4.2.css' %}" rel="stylesheet" type="text/css" />
+            <script src="{% static 'etc/js/webmegaraetc-0.4.2.js' %}"></script>
+            <script src="{% static 'etc/js/d3.min.js' %}"></script>
 
     {% endblock %}
 
@@ -26,22 +21,24 @@
 
     <div id="wrapper">
         <div id="theformcontainer">
-            <form id="myform" action="{% url 'etc:results' %}" method="get" target="my_iframe"> {% csrf_token %}
+{#            <form id="myform" action="{% url 'etc:results' %}" method="post">#}
+            <form id="myform" method="post">{% csrf_token %}
                 <div id="leftdiv">
-                    <p>Target Input Flux Distribution</p>
-                    {% bootstrap_form form1 %}
+                    <h4>Target Input Flux Distribution</h4>
+                    {% bootstrap_form form1%}
+
                 </div>
 
                 <div id="rightdiv">
-                    <p>Instrument Setup</p>
+                    <h4>Instrument Setup</h4>
                     {% bootstrap_form form2 %}
                 </div>
                 <div id="rightdiv">
-                    <p>Atmospheric Conditions</p>
+                    <h4>Atmospheric Conditions</h4>
                     {% bootstrap_form form3 %}
                 </div>
                 <div id="rightdiv">
-                    <p>Observational Setup</p>
+                    <h4>Observational Setup</h4>
                     {% bootstrap_form form4 %}
                 </div>
 
@@ -49,6 +46,9 @@
                 {% buttons class="aux"%}
                     {% bootstrap_button "Submit" button_type="submit" button_class="btn-primary" icon="star" %}
                     {% bootstrap_button "Reset" button_type="reset" button_class="btn-primary" icon="remove" %}
+                    {% bootstrap_button "Manual v0.4.2" button_type="link" button_class="btn-primary" icon="save-file" href="Javascript:newPopupBig('/static/etc/TEC_MEG_057-2D.pdf');" %}
+                    {% bootstrap_button "Help" button_type="link" button_class="btn-primary" icon="question-sign" href="Javascript:newPopupBig('/static/etc/help/HELP.txt');" %}
+                    {% bootstrap_button "Download" button_type="link" button_class="btn-primary" icon="floppy-save" href="/static/etc/megaraetc-0.4.1.tar" %}
                 {% endbuttons %}
                 </div>
 
@@ -61,12 +61,6 @@
 {#                                <input type="reset" value="Reset" />#}
 {#                            </td>#}
 {#                            <td align="center">#}
-{#                                <a href=" {% static 'etc/TEC_MEG_057-2D.pdf' %} " TARGET=_blank >#}
-{#                                    <input type="BUTTON" value="Manual v0.4.2">#}
-{#                                </a>#}
-{#                                <a href="Javascript:newPopupBig(' {% static 'etc/help/HELP.txt' %} ');">#}
-{#                                    <input type="BUTTON" value="Help">#}
-{#                                </a>#}
 {#                                <input type='button' id='btn2' value='New Window'>#}
 {#                                <a href="{% static 'etc/outputcalc.txt' %}" download>#}
 {#                                    <input type="button" value="Print to file">#}
@@ -97,50 +91,41 @@
 
     <!-- THE OUTPUT form STARTS HERE -->
             <div id="theoutput">
-{#                <table>#}
-{#                    <tr>#}
-{#                        <td align="center">#}
-{#                            <p>RESULTS</p>#}
-{#                            <b>Output Continuum S/N:</b>#}
-{#                            <a href="Javascript:newPopup(' {% static 'etc/help/continuumoutput.txt' %} ');">#}
-{#                                <input type="BUTTON" value="?">#}
-{#                            </a>#}
-{#                            <b>Output Line S/N:</b>#}
-{#                            <a href="Javascript:newPopup(' {% static 'etc/help/lineoutput.txt' %} ');">#}
-{#                                <input type="BUTTON" value="?">#}
-{#                            </a>#}
-{#                            <b>Input Parameters:</b>#}
-{#                            <a href="Javascript:newPopup(' {% static 'etc/help/inputparameters.txt' %} ');">#}
-{#                                <input type="BUTTON" value="?">#}
-{#                            </a>#}
-{#                            <!--<video controls loop autoplay width=70px>-->#}
-{#                              <!--<source src="{% static 'etc/movie.mp4' %}" type="video/mp4">-->#}
-{#                              <!--<source src="{% static 'etc/movie.ogg' %}" type="video/ogg">-->#}
-{#                              <!--Your browser does not support the video tag.-->#}
-{#                            <!--</video>-->#}
-{#                        </td>#}
-{#                    </tr>#}
-{#                </table>#}
-{##}
-                <div id="results">
-                    <iframe id="my_iframe" name="my_iframe" src="{% url 'etc:results' %}">
-                    </iframe>
+                <div id="result3">
+
+                            <b>Output Continuum S/N:</b>
+                            <a class="" href="Javascript:newPopupBig('/static/etc/help/continuumoutput.txt');" type="link"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <b>Output Line S/N:</b>
+                            <a class="" href="Javascript:newPopupBig('/static/etc/help/lineoutput.txt');" type="link"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <b>Input Parameters:</b>
+                            <a class="" href="Javascript:newPopupBig('/static/etc/help/inputparameters.txt');" type="link"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <div id="store_result">
+                                <b>Store Results:</b>
+                                <a class="" href="Javascript:newPopupBig('/static/etc/outputcalc.txt');" type="link"><span class="glyphicon glyphicon-save-file"></span></a>
+                            </div>
+                            <!--<video controls loop autoplay width=70px>-->
+                              <!--<source src="{% static 'etc/movie.mp4' %}" type="video/mp4">-->
+                              <!--<source src="{% static 'etc/movie.ogg' %}" type="video/ogg">-->
+                              <!--Your browser does not support the video tag.-->
+                            <!--</video>-->
                 </div>
-{##}
-{#                <hr>#}
-{#                MEGARA Online Exposure Time Calculator version 0.4.2<br />#}
-{#                Report problems/bugs/requests to: Alexandre Y. K. BOUQUIN ( abouquin at fis.ucm.es )<br />#}
-{##}
-{#                <div style="float:right">#}
-{#                    Released on: 01/31/2016. Last modified on:#}
-{#                    <script language="JavaScript">#}
-{#                    document.write(document.lastModified);#}
-{#                    </script>#}
-{#                </div>#}
+
+                <div id="result">
+                </div>
+                <div id="result2">
+                </div>
+
             </div>
         </div>
 
     <!--CLOSE WRAPPER-->
     </div>
 
+    <div class="modal"></div>
+
+    {% endblock %}
+
+
+    {% block footer %}
+        {% include "etc/footer.html" %}
     {% endblock %}
