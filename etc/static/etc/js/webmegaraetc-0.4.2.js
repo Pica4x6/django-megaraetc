@@ -23,7 +23,7 @@ $( document ).ready(function() {
                 $(data)[0]['graphic']
                 var content = $(data).find("#content");
                 $("#result").empty().append($(data)[0]['graphic']);
-                $("#result2").empty().append($(data)[0]['textcout'] + $(data)[0]['textinput'] + $(data)[0]['textlout']);
+                $("#result2").empty().append($(data)[0]['outtext'] + $(data)[0]['textcout'] + $(data)[0]['textinput'] + $(data)[0]['textlout']);
                 $("#store_result").css('visibility', 'visible');
                 //$('.btn-primary').css('color','#fff');
                 //$('.btn-primary').css('background-color','#337ab7');
