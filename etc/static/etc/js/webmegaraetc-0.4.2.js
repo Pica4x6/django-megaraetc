@@ -10,23 +10,27 @@ $( document ).ready(function() {
     $( "#myform" ).submit(function( event ) {
         // Stop form from submitting normally
         event.preventDefault();
-
-        //// Send the data using post
-        var posting = $.post( "/etc/do", $(this).serialize() );
-        //
-        // Put the results in a div
-        posting.done(function( data ) {
-            console.log($(data))
-            $(data)[0]['graphic']
-            var content = $( data ).find( "#content" );
-            $( "#result" ).empty().append( $(data)[0]['graphic'] );
-            $( "#result2" ).empty().append( $(data)[0]['textcout'] + $(data)[0]['textinput'] + $(data)[0]['textlout']);
-            $( "#store_result").css('visibility', 'visible');
-            //$('.btn-primary').css('color','#fff');
-            //$('.btn-primary').css('background-color','#337ab7');
-            //$('.btn-primary').css('border-color','#2e6da4');
-        });
-        $( "input[type=submit]").css('visibility', 'hidden')
+        if ($('#id_vph').val() == 1){
+            alert('HELLO WORLD')
+        }
+        else {
+            //// Send the data using post
+            var posting = $.post("/etc/do", $(this).serialize());
+            //
+            // Put the results in a div
+            posting.done(function (data) {
+                console.log($(data))
+                $(data)[0]['graphic']
+                var content = $(data).find("#content");
+                $("#result").empty().append($(data)[0]['graphic']);
+                $("#result2").empty().append($(data)[0]['textcout'] + $(data)[0]['textinput'] + $(data)[0]['textlout']);
+                $("#store_result").css('visibility', 'visible');
+                //$('.btn-primary').css('color','#fff');
+                //$('.btn-primary').css('background-color','#337ab7');
+                //$('.btn-primary').css('border-color','#2e6da4');
+            });
+            $("input[type=submit]").css('visibility', 'hidden')
+        }
     });
 });
 
